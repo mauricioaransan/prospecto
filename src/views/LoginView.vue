@@ -28,7 +28,7 @@
                     <v-select
                     v-model="empresa"
                     label="Empresa"
-                    :items="['Empresa 1', 'Empresa 2', 'Empresa 3', 'Empresa 4', 'Empresa 5', 'Empresa 6']"
+                    :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
                     ></v-select>                   
                 </v-col>
                 <v-col cols="6">
@@ -75,6 +75,8 @@ export default defineComponent({
             }
 
             store.commit('listarUsuarios', superUsuario);
+
+            console.log(store.state.usuarios);
         }
 
         return {

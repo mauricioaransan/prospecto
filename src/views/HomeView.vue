@@ -1,10 +1,15 @@
 <template>
-  <v-btn @click="showLogin()">
-    Login
-  </v-btn>
-  <v-btn @click="showRegister()">
-    Register
-  </v-btn>
+  <v-sheet class="homeCard pa-6" color="transparent" elevation="1">
+    <v-row class="ma-0 mt-10" justify="center" >
+        <v-btn @click="showLogin()" class="mr-8" color="green">
+          Login
+        </v-btn>
+        <v-btn @click="showRegister()" class="ml-8"  color="green">
+          Register
+        </v-btn>
+    
+    </v-row>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -35,6 +40,14 @@ export default defineComponent({
 
 <style>
 .v-main {
-  background-color: rgb(59, 54, 54);
+  /* background-color: rgb(59, 54, 54); */
+}
+.homeCard{
+  width: 60%;
+  height: 200px;
+  margin: 200px auto;
+  border-radius: 20px;
+  border: 4px solid white;
+
 }
 </style>

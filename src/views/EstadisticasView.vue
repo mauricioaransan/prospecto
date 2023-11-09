@@ -7,7 +7,28 @@
     :headers="HEADERS"
     :items="arrayTable"
     :rows-per-page="6"
-    >         
+    >     
+    <template v-for="(item,i) in arrayCursos" :key="i" #[item]="arrayCurso">
+        <div>
+            {{ arrayCurso[item.split("-")[1]] }} 
+            <span v-if="arrayCurso[item.split('-')[1]]>=11"> <v-icon color="green">mdi-thumb-up-outline</v-icon></span>
+            <span v-else><v-icon color="red">mdi-thumb-down-outline</v-icon></span>
+        </div>
+    </template>    
+    <template  #item-promedio="item">
+        <div> 
+            <span v-if="item.promedio>=55">
+                <v-chip prepend-icon="mdi-thumb-up-outline" color="green">
+                    Aprobado
+                </v-chip> 
+            </span>
+            <span v-else>
+                <v-chip prepend-icon="mdi-thumb-down-outline" color="red">
+                    Desaprobado
+                </v-chip> 
+            </span>
+        </div>
+    </template>    
     </Vue3EasyDataTable>
     <v-btn @click="returnpage()" color="blue">
         volver
@@ -32,7 +53,8 @@ export default defineComponent({
         const empresa = ref('');
         const usuario = ref('');
         const HEADERS = ref( [] );
-        const arrayTable:any = ref([])
+        const arrayTable:any = ref([]);
+        const arrayCursos = ref(['item-Curso1','item-Curso2','item-Curso3','item-Curso4','item-Curso5']);
 
         const returnpage = () => {
             router.push('/')
@@ -50,13 +72,15 @@ export default defineComponent({
                     sortable:true,
                 }];
                 if(empresa.value === user.empresa){
-                    if(user.empresa === 'Empresa1'){
+                    if(user.empresa === 'Empresa1' || user.empresa === 'Empresa2' || user.empresa === 'Empresa4'){
+                        console.log(user)
                         
                         let userFinal = user.nombre;
                         let cursos:any = {
                             usuario : userFinal,
                         }
 
+                        let notatotal = 0 ;
                         user.cursos.forEach((curso:any) => {
                            cursos[curso.name] = curso.nota;
                            header.push({                            
@@ -64,6 +88,14 @@ export default defineComponent({
                             value:curso.name,
                             sortable:true,
                            })
+                           notatotal = notatotal + curso.nota;
+                        })
+
+                        cursos['promedio'] = notatotal;
+                        header.push({
+                            text: 'Promedio',
+                            value: 'promedio',
+                            sortable:true,
                         })
 
                         // console.log(cursos)
@@ -73,18 +105,18 @@ export default defineComponent({
                        
                     }
                     
-                    console.log(header)
-            HEADERS.value = header;
+                    // console.log(header)
+                    HEADERS.value = header;
                 }
 
             })
-            console.log(arrayTable.value)
+            // console.log(arrayTable.value)
             
         }
         
         return {
             returnpage,changeUsuarios,
-            HEADERS,arrayTable,
+            HEADERS,arrayTable,arrayCursos,
             usuarios,empresa, usuario
         }
     }

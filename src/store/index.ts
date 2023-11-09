@@ -4,6 +4,7 @@ export default createStore({
   state: {
     usuarios:[
       {
+        id        : 1,
         nombre    : 'Jorge',
         apellido  : 'Chavez',
         correo    : 'jorge.chavez@gmail.com',
@@ -17,6 +18,7 @@ export default createStore({
         empresa   : 'Empresa1',
       },
       {
+        id        : 2,
         nombre    : 'Mateo',
         apellido  : 'Ruiz',
         correo    : 'mateo.ruiz@gmail.com',
@@ -30,6 +32,7 @@ export default createStore({
         empresa   : 'Empresa1',
       },
       {
+        id        : 3,
         nombre    : 'Maria',
         apellido  : 'Rodriguez',
         correo    : 'Maria.Rodriguez@gmail.com',
@@ -43,6 +46,7 @@ export default createStore({
         empresa   : 'Empresa1',
       },
       {
+        id        : 4,
         nombre    : 'Mario',
         apellido  : 'Baltazar',
         correo    : 'mario.baltazar@gmail.com',
@@ -56,27 +60,49 @@ export default createStore({
         empresa   : 'Empresa1',
       },
       {
+        id        : 5,
         nombre    : 'Julio',
         apellido  : 'Sanchez',
         correo    : 'julio.sanchez@gmail.com',
-        cursos     : 'Curso2',
+        cursos    : [
+          {name : 'Curso1', nota: 11},
+          {name : 'Curso2', nota: 10},
+          {name : 'Curso3', nota: 10},
+          {name : 'Curso4', nota: 14},
+          {name : 'Curso5', nota: 17},
+        ],
         empresa   : 'Empresa2',
       },
       {
+        id        : 6,
         nombre    : 'Roberto',
         apellido  : 'Llanos',
         correo    : 'roberto.llanos@gmail.com',
-        cursos     : 'Curso3',
+        cursos    : [
+          {name : 'Curso1', nota: 14},
+          {name : 'Curso2', nota: 16},
+          {name : 'Curso3', nota: 19},
+          {name : 'Curso4', nota: 20},
+          {name : 'Curso5', nota: 20},
+        ],
         empresa   : 'Empresa2',
       },
       {
+        id        : 7,
         nombre    : 'Jazmine',
         apellido  : 'Cavana',
         correo    : 'jazmine.cavana@gmail.com',
-        cursos     : 'Curso1',
+        cursos    : [
+          {name : 'Curso1', nota: 14},
+          {name : 'Curso2', nota: 15},
+          {name : 'Curso3', nota: 6},
+          {name : 'Curso4', nota: 3},
+          {name : 'Curso5', nota: 20},
+        ],
         empresa   : 'Empresa2',
       },
       {
+        id        : 8,
         nombre    : 'Georgina',
         apellido  : 'Quiroz',
         correo    : 'georgina.quiroz@gmail.com',
@@ -84,6 +110,7 @@ export default createStore({
         empresa   : 'Empresa3',
       },
       {
+        id        : 9,
         nombre    : 'Tereza',
         apellido  : 'Perez',
         correo    : 'tereza.perez@gmail.com',
@@ -91,6 +118,7 @@ export default createStore({
         empresa   : 'Empresa4',
       },
       {
+        id        : 10,
         nombre    : 'Luis',
         apellido  : 'Advincula',
         correo    : 'luiz.advincula@gmail.com',
@@ -98,6 +126,7 @@ export default createStore({
         empresa   : 'Empresa5',
       },
       {
+        id        : 11,
         nombre    : 'Cesar',
         apellido  : 'Cueto',
         correo    : 'cesar.cueto@gmail.com',
@@ -111,6 +140,19 @@ export default createStore({
   mutations: {
     listarUsuarios(state,totalUsuarios){
       state.usuarios.push(totalUsuarios);
+    },
+    addCursos(state,finalCurso){
+      console.log('entro al Store')
+      const indexado = state.usuarios.findIndex(({nombre,empresa}:any)=>{
+        if(nombre === finalCurso.nombre && empresa === finalCurso.empresa){
+          return true
+          // console.log(finalCurso.nombre,finalCurso.cursos,finalCurso.empresa)
+          // state.usuarios.id[id].cursos = finalCurso.cursos;
+          // console.log(finalCurso.cursos)
+        }
+      })
+      state.usuarios[indexado].cursos = finalCurso.cursos;
+      console.log(indexado)
     }
   },
   actions: {
