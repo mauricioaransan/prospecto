@@ -9,7 +9,7 @@
                     <v-select
                     v-model="curso"
                     label="Curso"
-                    :items="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5', 'Curso 6']"
+                    :items="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5']"
                     ></v-select>                  
                 </v-col>
                 <v-col cols="6">
@@ -35,10 +35,21 @@
                     <v-file-input v-model="documento" label="Registre su Documento"></v-file-input>                   
                 </v-col>
                 <v-col cols="12">
-                    <v-btn @click="guardar()" block>Guardar</v-btn>                   
+                    <v-btn @click="guardar()" block
+                    
+                    :disabled="curso==='' || nombre==='' || apellido==='' || correo==='' || empresa===''"
+                    >Guardar</v-btn>                   
                 </v-col>
             </v-row>            
         </v-card>
+
+        <v-snackbar
+            v-model="snackbarAdd"
+            :timeout="2000"
+            color="success"
+            >            
+            Usuario agregado Exitosamente
+        </v-snackbar>
     </div>
     <v-btn @click="returnpage()" color="blue">
         return
@@ -60,6 +71,8 @@ export default defineComponent({
         const empresa   = ref('');
         const documento = ref([]);
 
+        const snackbarAdd = ref(false);
+
         const store = useStore();
         
         const returnpage = () => {
@@ -70,13 +83,22 @@ export default defineComponent({
                 nombre : nombre.value,
                 apellido : apellido.value,
                 correo : correo.value,
-                curso : curso.value,
+                cursos : curso.value,
                 empresa : empresa.value
             }
 
             store.commit('listarUsuarios', superUsuario);
 
-            console.log(store.state.usuarios);
+            snackbarAdd.value = true;
+
+            curso.value     = '';   
+            nombre.value    = '';  
+            apellido.value  = ''; 
+            correo.value    = '';   
+            empresa.value   = '';  
+            documento.value = [];
+
+            // console.log(store.state.usuarios); 
         }
 
         return {
@@ -86,6 +108,7 @@ export default defineComponent({
             correo,   
             empresa,  
             documento,
+            snackbarAdd,
             returnpage, guardar,
         }
     }

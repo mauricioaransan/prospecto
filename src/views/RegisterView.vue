@@ -9,26 +9,71 @@
                 <v-select :items="usuarios" v-model="usuario"></v-select>
             </v-col>
             <v-col cols="6">
-                <v-text-field label="Curso 1" v-model="curso1"></v-text-field>
+                <v-text-field 
+                label="Curso 1" 
+                v-model="curso1" 
+                :disabled="usuario===''" 
+                type="number" 
+                hide-spin-buttons
+                :rules="rules" 
+                ></v-text-field>
             </v-col>
             <v-col cols="6">
-                <v-text-field label="Curso 2" v-model="curso2"></v-text-field>
+                <v-text-field 
+                label="Curso 2" 
+                v-model="curso2" 
+                :disabled="usuario===''" 
+                type="number" 
+                hide-spin-buttons
+                :rules="rules" 
+                ></v-text-field>
             </v-col>
             <v-col cols="6">
-                <v-text-field label="Curso 3" v-model="curso3"></v-text-field>
+                <v-text-field 
+                label="Curso 3" 
+                v-model="curso3" 
+                :disabled="usuario===''" 
+                type="number" 
+                hide-spin-buttons
+                :rules="rules" 
+                ></v-text-field>
             </v-col>
             <v-col cols="6">
-                <v-text-field label="Curso 4" v-model="curso4"></v-text-field>
+                <v-text-field 
+                label="Curso 4" 
+                v-model="curso4" 
+                :disabled="usuario===''" 
+                type="number" 
+                hide-spin-buttons
+                :rules="rules" 
+                ></v-text-field>
             </v-col>
             <v-col cols="6">
-                <v-text-field label="Curso 5" v-model="curso5"></v-text-field>
+                <v-text-field 
+                label="Curso 5" 
+                v-model="curso5" 
+                :disabled="usuario===''" 
+                type="number" 
+                hide-spin-buttons
+                :rules="rules" 
+                ></v-text-field>
             </v-col>            
         </v-row>
         <v-row class="ma-0" justify="center">
             <v-col cols="9">
-                <v-btn @click="guardarNota()" block>guardar</v-btn>
+                <v-btn @click="guardarNota()" block
+                :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined"
+                >guardar</v-btn>
             </v-col>
         </v-row>
+
+        <v-snackbar
+        v-model="snackbarAdd"
+        :timeout="2000"
+        color="success"
+        >            
+        Notas Agregadas exitosamente
+        </v-snackbar>
     </v-card>
     <v-btn @click="returnpage()" color="blue">
         volver
@@ -40,7 +85,7 @@
 
 <script lang="ts">
 import router from '@/router';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, Ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -51,11 +96,20 @@ export default defineComponent({
         const empresaReg = ref('');
         const usuario = ref('');
 
-        const curso1 = ref(0);
-        const curso2 = ref(0);
-        const curso3 = ref(0);
-        const curso4 = ref(0);
-        const curso5 = ref(0);
+        const curso1:Ref<number|undefined> = ref();
+        const curso2:Ref<number|undefined> = ref();
+        const curso3:Ref<number|undefined> = ref();
+        const curso4:Ref<number|undefined> = ref();
+        const curso5:Ref<number|undefined> = ref();
+
+        const rules = ref(
+            [
+            (value:any) => !!value || 'Este campo es requerido',
+            (value:any) => !!value && value <= 20 || 'No ingresar valores mayores a 20'
+            ]
+        )
+
+        const snackbarAdd = ref(false);
 
         const returnpage = () => {
             router.push('/')
@@ -96,12 +150,22 @@ export default defineComponent({
                     // console.log('hay un usuario')
                 }
             })
+
+            curso1.value  = undefined;
+            curso2.value  = undefined;
+            curso3.value  = undefined;
+            curso4.value  = undefined;
+            curso5.value  = undefined;
+            usuario.value = '';
+
+            snackbarAdd.value = true;
         }
         
         return {
             returnpage,changeUsuarios,showTable,guardarNota,
             curso1, curso2, curso3, curso4, curso5,
-            usuarios,empresaReg, usuario
+            rules,
+            usuarios,empresaReg, usuario, snackbarAdd
         }
     }
 })

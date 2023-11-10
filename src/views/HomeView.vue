@@ -4,8 +4,11 @@
         <v-btn @click="showLogin()" class="mr-8" color="green">
           Login
         </v-btn>
-        <v-btn @click="showRegister()" class="ml-8"  color="green">
+        <v-btn @click="showRegister()" class="mx-8"  color="green">
           Register
+        </v-btn>
+        <v-btn @click="showEstadisticas()" class="ml-8"  color="green">
+          Estadisticas
         </v-btn>
     
     </v-row>
@@ -30,9 +33,12 @@ export default defineComponent({
     const showRegister = () => {
       router.push('/register')
     }
+    const showEstadisticas = () => {
+      router.push('/estadisticas')
+    }
 
     return{
-      showLogin,showRegister
+      showLogin,showRegister,showEstadisticas
     }
   }
 });
