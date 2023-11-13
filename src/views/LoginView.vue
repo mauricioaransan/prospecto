@@ -3,41 +3,36 @@
         Login
     </h1>
     <div class=content-register>
-        <v-card class="pa-4 logincard" color="transparent">
+        <v-card class="pa-4 logincard">
             <v-row class="ma-0">
-                <v-col cols="6">
+                <!-- <v-col cols="6">
                     <v-select
                     v-model="curso"
                     label="Curso"
                     :items="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5']"
                     ></v-select>                  
-                </v-col>
-                <v-col cols="6">
-                    <v-text-field label="Nombres" v-model="nombre">
-                    </v-text-field>                    
-                </v-col>
-                <v-col cols="6">
+                </v-col> -->
+                <v-col cols="6" class="px-0">
+                    <v-text-field class="loginInput my-3" label="Nombres" v-model="nombre" hide-details >
+                    </v-text-field>  
                     <v-text-field label="Apellidos" v-model="apellido">
-                    </v-text-field>                    
-                </v-col>
-                <v-col cols="6">
+                    </v-text-field>   
                     <v-text-field label="Correo" v-model="correo">
-                    </v-text-field>                    
-                </v-col>
-                <v-col cols="6">
+                    </v-text-field>  
                     <v-select
                     v-model="empresa"
                     label="Empresa"
                     :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
-                    ></v-select>                   
+                    ></v-select>    
+                    <v-file-input v-model="documento" label="Registre su Documento"></v-file-input>          
                 </v-col>
                 <v-col cols="6">
-                    <v-file-input v-model="documento" label="Registre su Documento"></v-file-input>                   
+                    <v-img class="imgLogin" src="@/assets/imgprincipal.jpg"></v-img>
                 </v-col>
-                <v-col cols="12">
-                    <v-btn @click="guardar()" block
-                    
-                    :disabled="curso==='' || nombre==='' || apellido==='' || correo==='' || empresa===''"
+                
+                <v-col cols="12" class="mt-8">
+                    <v-btn @click="guardar()" block color="#b31d3f"
+                    :disabled=" nombre==='' || apellido==='' || correo==='' || empresa===''"
                     >Guardar</v-btn>                   
                 </v-col>
             </v-row>            
@@ -118,8 +113,18 @@ export default defineComponent({
 <style>
 .logincard{
     margin: 0 auto;
-    width: 60%;
+    width: 80%;
     border-radius: 20px;
-    border: 2px solid grey;
+    border: 3px solid rgba(74, 10, 27,0.5);
+    background-color: #fbd0d5 !important;
+}
+.imgLogin{
+    border-radius: 40px;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 4px 7px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.loginInput{
+    border-radius: 20px !important;
 }
 </style>
