@@ -98,6 +98,8 @@ export default defineComponent({
 
                         let notatotal = 0 ;
                         user.cursos.forEach((curso:any) => {
+                            //MEJORAR LA LOGICA AQUI
+                            arrayGraph.value.cursos[curso.name] ? null : arrayGraph.value.cursos[curso.name] = {} ;
                            cursos[curso.name] = curso.nota;
                            header.push({                            
                             text: curso.name,
@@ -105,7 +107,7 @@ export default defineComponent({
                             sortable:true,
                            })
                            notatotal = notatotal + parseInt(curso.nota);
-                           curso.nota >= 11 ? arrayGraph.value.cursos[curso.name]=+1 : arrayGraph.value.cursos[curso.name] =+11
+                           curso.nota >= 11 ? arrayGraph.value.cursos[curso.name]['aprob']=+1 : arrayGraph.value.cursos[curso.name]['desaprob'] =+1
                         })
 
                         cursos['promedio'] = notatotal;
