@@ -1,14 +1,18 @@
 <template>
-    <h1>Register</h1>
-    <v-card class="pa-4 logincard" color="transparent">
+    <v-card class="pa-4 my-4 logincard" color="#effefb" :style="smAndDown?'width: 95%':'width:80%'">
+        <v-row class="ma-0" justify="center">
+            <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Registro de Notas </div>
+        </v-row>
         <v-row class="ma-0">
-            <v-col cols="7">
-                <v-select @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+                <h4>Seleccione su Empresa</h4>
+                <v-select class="mt-2 mb-4" @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']" hide-details></v-select>
             </v-col>
-            <v-col cols="7">
-                <v-select :items="usuarios" v-model="usuario"></v-select>
+            <v-col  cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+                <h4>Seleccione al trabajador</h4>
+                <v-select class="mt-2 mb-4" :disabled="empresaReg=== ''" :items="usuarios" item-title="text" item-value="value" v-model="usuario"></v-select>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <v-text-field 
                 label="Curso 1" 
                 v-model="curso1" 
@@ -18,7 +22,7 @@
                 :rules="rules" 
                 ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <v-text-field 
                 label="Curso 2" 
                 v-model="curso2" 
@@ -28,7 +32,7 @@
                 :rules="rules" 
                 ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <v-text-field 
                 label="Curso 3" 
                 v-model="curso3" 
@@ -38,7 +42,7 @@
                 :rules="rules" 
                 ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <v-text-field 
                 label="Curso 4" 
                 v-model="curso4" 
@@ -48,7 +52,7 @@
                 :rules="rules" 
                 ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <v-text-field 
                 label="Curso 5" 
                 v-model="curso5" 
@@ -62,6 +66,7 @@
         <v-row class="ma-0" justify="center">
             <v-col cols="9">
                 <v-btn @click="guardarNota()" block
+                color="#029f8f"
                 :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined"
                 >guardar</v-btn>
             </v-col>
@@ -87,14 +92,17 @@
 import router from '@/router';
 import { defineComponent, ref, Ref } from 'vue';
 import { useStore } from 'vuex';
+import { useDisplay } from 'vuetify';
 
 export default defineComponent({
     setup () {
         
         const store = useStore();
-        const usuarios = ref(['']);
+        const usuarios:any = ref([]);
         const empresaReg = ref('');
         const usuario = ref('');
+
+        const { smAndDown } = useDisplay();
 
         const curso1:Ref<number|undefined> = ref();
         const curso2:Ref<number|undefined> = ref();
@@ -120,7 +128,7 @@ export default defineComponent({
             usuarios.value = [];
             store.state.usuarios.forEach((user:any) =>{
                 if(empresaReg.value === user.empresa){
-                    usuarios.value.push(user.nombre)
+                    usuarios.value.push({text:`${user.nombre} ${user.apellido}`, value:user.id})
                 }
                
             })
@@ -132,8 +140,8 @@ export default defineComponent({
 
         const guardarNota = () => {
             // console.log(store.state.usuarios)
-            store.state.usuarios.find(({nombre,empresa}:any)=>{
-                if(usuario.value === nombre && empresaReg.value === empresa){
+            store.state.usuarios.find(({id,nombre,empresa}:any)=>{
+                if(usuario.value === id && empresaReg.value === empresa){
                     let cursos = [
                     {name : 'Curso1', nota: curso1.value},
                     {name : 'Curso2', nota: curso2.value},
@@ -164,7 +172,7 @@ export default defineComponent({
         return {
             returnpage,changeUsuarios,showTable,guardarNota,
             curso1, curso2, curso3, curso4, curso5,
-            rules,
+            rules, smAndDown,
             usuarios,empresaReg, usuario, snackbarAdd
         }
     }

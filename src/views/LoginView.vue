@@ -1,9 +1,9 @@
 <template>
-    <h1>
-        Login
-    </h1>
     <div class=content-register>
-        <v-card class="pa-4 logincard">
+        <v-card class="pa-4 mt-10 mb-4 logincard" :style="smAndDown?'width: 95%':'width:80%'">
+            <v-row class="ma-0" justify="center">
+                <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Ficha de usuario </div>
+            </v-row>
             <v-row class="ma-0">
                 <!-- <v-col cols="6">
                     <v-select
@@ -12,26 +12,32 @@
                     :items="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5']"
                     ></v-select>                  
                 </v-col> -->
-                <v-col cols="6" class="px-0">
-                    <v-text-field class="loginInput my-3" label="Nombres" v-model="nombre" hide-details >
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="px-0">
+                    <h4>Nombres</h4>
+                    <v-text-field class="loginInput mt-1 mb-3"  v-model="nombre" hide-details >
                     </v-text-field>  
-                    <v-text-field label="Apellidos" v-model="apellido">
+                    <h4>Apellidos</h4>
+                    <v-text-field class="loginInput mt-1 mb-3" v-model="apellido" hide-details>
                     </v-text-field>   
-                    <v-text-field label="Correo" v-model="correo">
+                    <h4>Correo</h4>
+                    <v-text-field class="loginInput mt-1 mb-3" v-model="correo" hide-details>
                     </v-text-field>  
+                    <h4>Empresa</h4>
                     <v-select
+                    class="loginInput mt-1 mb-3"
                     v-model="empresa"
-                    label="Empresa"
                     :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
-                    ></v-select>    
+                    hide-details
+                    ></v-select> 
+                    <h4>Documentos</h4>   
                     <v-file-input v-model="documento" label="Registre su Documento"></v-file-input>          
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" align-self="center">
                     <v-img class="imgLogin" src="@/assets/imgprincipal.jpg"></v-img>
                 </v-col>
                 
                 <v-col cols="12" class="mt-8">
-                    <v-btn @click="guardar()" block color="#b31d3f"
+                    <v-btn @click="guardar()" block color="#029f8f"
                     :disabled=" nombre==='' || apellido==='' || correo==='' || empresa===''"
                     >Guardar</v-btn>                   
                 </v-col>
@@ -53,8 +59,9 @@
 
 <script lang="ts">
 import router from '@/router'
-import { defineComponent,ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex';
+import { useDisplay } from 'vuetify';
 
 export default defineComponent({
     setup () {
@@ -68,13 +75,18 @@ export default defineComponent({
 
         const snackbarAdd = ref(false);
 
+        const {smAndDown} = useDisplay();
+
         const store = useStore();
+
+        const userLength = computed(()=> store.state.usuarios.length)
         
         const returnpage = () => {
             router.push('/')
         }
         const guardar = () => {
             let superUsuario = {
+                id: userLength.value+1,
                 nombre : nombre.value,
                 apellido : apellido.value,
                 correo : correo.value,
@@ -93,7 +105,7 @@ export default defineComponent({
             empresa.value   = '';  
             documento.value = [];
 
-            // console.log(store.state.usuarios); 
+            console.log(store.state.usuarios); 
         }
 
         return {
@@ -104,6 +116,7 @@ export default defineComponent({
             empresa,  
             documento,
             snackbarAdd,
+            smAndDown,
             returnpage, guardar,
         }
     }
@@ -113,11 +126,23 @@ export default defineComponent({
 <style>
 .logincard{
     margin: 0 auto;
-    width: 80%;
+    /* width: 80%; */
     border-radius: 20px;
-    border: 3px solid rgba(74, 10, 27,0.5);
-    background-color: #fbd0d5 !important;
+    border: 3px solid rgb(6, 127, 117);
+    background-color: #effefb !important;
 }
+
+.CardTitle{
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.CardTitleXS{
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 3px 3px 5px grey;
+}
+
 .imgLogin{
     border-radius: 40px;
     width: 90%;
