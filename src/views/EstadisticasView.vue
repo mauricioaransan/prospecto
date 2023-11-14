@@ -60,7 +60,6 @@ export default defineComponent({
         
         const store = useStore();
         const empresa = ref('');
-        const usuario = ref('');
         const HEADERS = ref( [] );
         const arrayTable:any = ref([]);
         const arrayCursos = ref(['item-Curso1','item-Curso2','item-Curso3','item-Curso4','item-Curso5']);
@@ -79,7 +78,8 @@ export default defineComponent({
         }
 
         const changeUsuarios = () => {
-            usuario.value = '';
+            arrayGraph.value.promedio = {aprobado: 0,desaprobado:0};
+            arrayGraph.value.cursos = {};
             arrayTable.value = [];
             let header:any = [];
             store.state.usuarios.forEach((user:any) =>{
@@ -98,8 +98,7 @@ export default defineComponent({
 
                         let notatotal = 0 ;
                         user.cursos.forEach((curso:any) => {
-                            //MEJORAR LA LOGICA AQUI
-                            arrayGraph.value.cursos[curso.name] ? null : arrayGraph.value.cursos[curso.name] = {} ;
+                           arrayGraph.value.cursos[curso.name] ? null : arrayGraph.value.cursos[curso.name] = {aprob:0,desaprob:0} ;
                            cursos[curso.name] = curso.nota;
                            header.push({                            
                             text: curso.name,
@@ -107,7 +106,9 @@ export default defineComponent({
                             sortable:true,
                            })
                            notatotal = notatotal + parseInt(curso.nota);
-                           curso.nota >= 11 ? arrayGraph.value.cursos[curso.name]['aprob']=+1 : arrayGraph.value.cursos[curso.name]['desaprob'] =+1
+                           curso.nota >= 11 ? arrayGraph.value.cursos[curso.name].aprob= arrayGraph.value.cursos[curso.name].aprob + 1 
+                           : 
+                           arrayGraph.value.cursos[curso.name].desaprob =  arrayGraph.value.cursos[curso.name].desaprob + 1;
                         })
 
                         cursos['promedio'] = notatotal;
@@ -139,7 +140,7 @@ export default defineComponent({
         return {
             returnpage,changeUsuarios,
             HEADERS,arrayTable,arrayCursos,
-            empresa, usuario,
+            empresa,
             smAndDown,
         }
     }
