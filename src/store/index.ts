@@ -166,17 +166,12 @@ export default createStore({
       state.usuarios.push(totalUsuarios);
     },
     addCursos(state,finalCurso){
-      console.log('entro al Store')
       const indexado = state.usuarios.findIndex(({nombre,empresa}:any)=>{
         if(nombre === finalCurso.nombre && empresa === finalCurso.empresa){
           return true
-          // console.log(finalCurso.nombre,finalCurso.cursos,finalCurso.empresa)
-          // state.usuarios.id[id].cursos = finalCurso.cursos;
-          // console.log(finalCurso.cursos)
         }
       })
       state.usuarios[indexado].cursos = finalCurso.cursos;
-      console.log(indexado)
     }
   },
   actions: {

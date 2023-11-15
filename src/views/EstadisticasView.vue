@@ -37,6 +37,14 @@
                 </div>
             </template>    
             </Vue3EasyDataTable>
+           <v-row class="ma-0">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
+                <DoughnutChart v-bind="doughnutChartProps" />
+            </v-col>
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
+                <BarChart v-bind="barChartProps"/>                
+            </v-col>
+           </v-row>
         </div>
     </v-sheet>
     <v-btn @click="returnpage()" color="blue">
@@ -46,15 +54,20 @@
 
 <script lang="ts">
 import router from '@/router';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useDisplay } from 'vuetify';
 
 import Vue3EasyDataTable    from 'vue3-easy-data-table';
+import { DoughnutChart, useDoughnutChart, useBarChart,BarChart } from "vue-chart-3";
+import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 
+Chart.register(...registerables);
 export default defineComponent({
     components:{
         Vue3EasyDataTable,
+        DoughnutChart,
+        BarChart,
     },
     setup () {
         
@@ -63,13 +76,21 @@ export default defineComponent({
         const HEADERS = ref( [] );
         const arrayTable:any = ref([]);
         const arrayCursos = ref(['item-Curso1','item-Curso2','item-Curso3','item-Curso4','item-Curso5']);
+        const donnutLabels = ref(['aprobados','desaprobados'])
         const arrayGraph:any = ref({
             promedio:{
                 aprobado: 0,
                 desaprobado:0
             },
-            cursos:{}
+            cursos:{},
+            cursoAprop:[],
+            cursoDespr:[],
         });
+        const arrayBars:any = ref({
+            titles:[],
+            aprobados:[],
+            desaprobados:[]
+        })
 
         const { smAndDown } = useDisplay();
 
@@ -112,7 +133,10 @@ export default defineComponent({
                         })
 
                         cursos['promedio'] = notatotal;
-                        notatotal >= 55 ? arrayGraph.value.promedio.aprobado =+ 1 : arrayGraph.value.promedio.desaprobado =+ 1;
+                        notatotal >= 55 ? 
+                        arrayGraph.value.promedio.aprobado = arrayGraph.value.promedio.aprobado + 1 
+                        :
+                        arrayGraph.value.promedio.desaprobado = arrayGraph.value.promedio.desaprobado + 1;
                         
                         header.push({
                             text: 'Promedio',
@@ -120,28 +144,109 @@ export default defineComponent({
                             sortable:true,
                         })
 
-                        // console.log(cursos)
 
                         arrayTable.value.push(cursos);
                        
                         
                        
                     }
-                    // console.log(header)
                     HEADERS.value = header;
                 }
 
             })
-            // console.log(arrayTable.value)
-            console.log(arrayGraph.value.cursos)
+            getDataBars();
             
         }
         
+        const dataDonnut = computed<ChartData<"doughnut">>(() => ({
+        labels: donnutLabels.value,
+        datasets: [
+            {
+            data: [arrayGraph.value.promedio.aprobado,arrayGraph.value.promedio.desaprobado],
+            backgroundColor: [
+                "#0FFF7F",
+                "#FF0905",
+            ],
+            },
+        ],
+        }));
+
+        const getDataBars = () => {
+
+            let aprobados:any = [];
+            let desaprobados:any = [];
+            const propertyNames = Object.keys(arrayGraph.value.cursos);
+            const propertyValues = Object.values(arrayGraph.value.cursos);
+            propertyValues.forEach((item:any)=>{
+                aprobados.push(item.aprob)
+                desaprobados.push(item.desaprob)
+            })
+
+            arrayBars.value.titles          =  propertyNames;
+            arrayBars.value.aprobados       =  aprobados;
+            arrayBars.value.desaprobados    =  desaprobados;
+        }
+        
+        const dataBars = computed<ChartData<"bar">>(() => ({
+        
+        labels: arrayBars.value.titles,
+        datasets: [
+            {
+            label: 'Aprobados: ',
+            data: arrayBars.value.aprobados,
+            backgroundColor: "#0FFF7F",
+            },
+            {
+            label: 'Desaprobados: ',
+            data: arrayBars.value.desaprobados,
+            backgroundColor: "#FF0905",
+            },
+        ],
+        }));
+
+        const options = computed<ChartOptions<"doughnut">>(() => ({        
+        plugins: {
+            title: {
+            display: true,
+            text: "Total Aprobados",
+            },
+        },
+        }));
+
+        const optionsBar = computed<ChartOptions<"bar">>(() => ({        
+        plugins: {
+            title: {
+            display: true,
+            text: "Total Aprobados Por Curso",
+            },
+        },
+        responsive: true,
+            scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+            }
+        }));
+
+        const { doughnutChartProps } = useDoughnutChart({
+        chartData: dataDonnut,
+        options,
+        });
+        const { barChartProps } = useBarChart({
+        chartData: dataBars,
+        options:optionsBar,
+        });
+
         return {
             returnpage,changeUsuarios,
+            doughnutChartProps,barChartProps,
             HEADERS,arrayTable,arrayCursos,
             empresa,
             smAndDown,
+            arrayGraph,
         }
     }
 })

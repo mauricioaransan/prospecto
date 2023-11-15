@@ -37,9 +37,9 @@
                 </v-col>
                 
                 <v-col cols="12" class="mt-8">
-                    <v-btn @click="guardar()" block color="#029f8f"
+                    <v-btn class="btnEnviar" @click="guardar()" width="200" color="#029f8f"  prepend-icon="mdi-send"
                     :disabled=" nombre==='' || apellido==='' || correo==='' || empresa===''"
-                    >Guardar</v-btn>                   
+                    >Enviar</v-btn>                   
                 </v-col>
             </v-row>            
         </v-card>
@@ -103,9 +103,7 @@ export default defineComponent({
             apellido.value  = ''; 
             correo.value    = '';   
             empresa.value   = '';  
-            documento.value = [];
-
-            console.log(store.state.usuarios); 
+            documento.value = []; 
         }
 
         return {
@@ -151,5 +149,54 @@ export default defineComponent({
 }
 .loginInput{
     border-radius: 20px !important;
+}
+
+
+
+.btnEnviar{
+    display: flex;
+    overflow: hidden;    
+    align-items: center;
+    transition: all 0.2s;
+    margin: 0 auto;
+}
+
+.btnEnviar:hover{
+    transform: scale(1.10);
+}
+
+.btnEnviar .v-btn__prepend{
+    transform: rotate(-45deg);
+    transform-origin: center center;
+    transition: 0.5s;
+}
+
+.btnEnviar:hover .v-btn__prepend{
+    transform: translateX(2.3rem) rotate(0deg);
+    animation: fly-1 ease-in-out infinite alternate;
+}
+
+.btnEnviar .v-btn__content{
+    transition: all 0.5s ease-in-out;
+    margin-top: 5px;
+}
+
+.btnEnviar:hover .v-btn__content{
+    transform: translateX(10rem);
+}
+
+.btnEnviar:active{
+    transform: scale(0.95);
+}
+
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
 }
 </style>
