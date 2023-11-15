@@ -194,6 +194,7 @@ export default defineComponent({
 
 <style>
 .selectItem .v-input__control{
+    border-radius: 20px;
     background-color: white;
 }
 .btnGuardar{

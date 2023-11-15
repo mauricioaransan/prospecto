@@ -141,10 +141,16 @@ export default defineComponent({
     margin: 0 auto;
     box-shadow: 4px 7px 2px 4px rgba(0, 0, 0, 0.2);
 }
-.selectItem{
-    border-radius: 20px !important;
+.selectItem .v-field__outline .v-field__outline__start{
+    /* border-radius: 20px !important; */
+    border-start-start-radius: 20px !important;  
+    border-end-start-radius: 20px;
 }
 
+.selectItem .v-field__outline .v-field__outline__end{
+    border-start-end-radius: 20px;
+    border-end-end-radius: 20px;
+}
 
 
 .btnEnviar{
