@@ -4,45 +4,52 @@
             <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Resultado por Empresa </div>
         </v-row>
         <h4 class="mt-1 mb-3">Seleccione la Empresa </h4>
-        <v-select  @update:menu="changeUsuarios()" v-model="empresa" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
+        <v-select class="selectItem" variant="outlined"  @update:menu="changeUsuarios()" v-model="empresa" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
         
         <div v-if="empresa!==''">
-            <h4> Promedio de Usuarios </h4>
-            <Vue3EasyDataTable
-            theme-color="#0e2f5a"
-            show-index
-            :headers="HEADERS"
-            :items="arrayTable"
-            :rows-per-page="6"
-            >     
-            <template v-for="(item,i) in arrayCursos" :key="i" #[item]="arrayCurso">
-                <div>
-                    {{ arrayCurso[item.split("-")[1]] }} 
-                    <span v-if="arrayCurso[item.split('-')[1]]>=11"> <v-icon color="green">mdi-thumb-up-outline</v-icon></span>
-                    <span v-else><v-icon color="red">mdi-thumb-down-outline</v-icon></span>
-                </div>
-            </template>    
-            <template  #item-promedio="item">
-                <div> 
-                    <span v-if="item.promedio>=55">
-                        <v-chip prepend-icon="mdi-thumb-up-outline" color="green">
-                            Aprobado
-                        </v-chip> 
-                    </span>
-                    <span v-else>
-                        <v-chip prepend-icon="mdi-thumb-down-outline" color="red">
-                            Desaprobado
-                        </v-chip> 
-                    </span>
-                </div>
-            </template>    
-            </Vue3EasyDataTable>
-           <v-row class="ma-0">
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
-                <DoughnutChart v-bind="doughnutChartProps" />
+            <v-sheet color="white" class="cardGraphs">
+                <h4> Promedio de Usuarios </h4>
+                <Vue3EasyDataTable
+                theme-color="#0e2f5a"
+                show-index
+                :headers="HEADERS"
+                :items="arrayTable"
+                :rows-per-page="6"
+                class="mt-4 mb-2"
+                >     
+                <template v-for="(item,i) in arrayCursos" :key="i" #[item]="arrayCurso">
+                    <div>
+                        {{ arrayCurso[item.split("-")[1]] }} 
+                        <span v-if="arrayCurso[item.split('-')[1]]>=11"> <v-icon color="green">mdi-thumb-up-outline</v-icon></span>
+                        <span v-else><v-icon color="red">mdi-thumb-down-outline</v-icon></span>
+                    </div>
+                </template>    
+                <template  #item-promedio="item">
+                    <div> 
+                        <span v-if="item.promedio>=55">
+                            <v-chip prepend-icon="mdi-thumb-up-outline" color="green">
+                                Aprobado
+                            </v-chip> 
+                        </span>
+                        <span v-else>
+                            <v-chip prepend-icon="mdi-thumb-down-outline" color="red">
+                                Desaprobado
+                            </v-chip> 
+                        </span>
+                    </div>
+                </template>    
+                </Vue3EasyDataTable>
+            </v-sheet>
+           <v-row class="ma-0 mt-4">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="pa-0 pr-2">
+                <v-sheet color="white" class="cardGraphs">
+                    <DoughnutChart v-bind="doughnutChartProps" height="250" width="250" />
+                </v-sheet>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
-                <BarChart v-bind="barChartProps"/>                
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="pa-0 pl-2">
+                <v-sheet color="white" class="cardGraphs">
+                    <BarChart v-bind="barChartProps" height="250" width="250"/>                
+                </v-sheet>
             </v-col>
            </v-row>
         </div>
@@ -260,5 +267,12 @@ export default defineComponent({
     border-radius: 20px;
     border: 4px solid grey;    
     background-color: #effefb !important;
+}
+
+.cardGraphs{
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 </style>

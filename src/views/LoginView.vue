@@ -5,32 +5,26 @@
                 <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Ficha de usuario </div>
             </v-row>
             <v-row class="ma-0">
-                <!-- <v-col cols="6">
-                    <v-select
-                    v-model="curso"
-                    label="Curso"
-                    :items="['Curso 1', 'Curso 2', 'Curso 3', 'Curso 4', 'Curso 5']"
-                    ></v-select>                  
-                </v-col> -->
                 <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="px-0">
                     <h4>Nombres</h4>
-                    <v-text-field class="loginInput mt-1 mb-3"  v-model="nombre" hide-details >
+                    <v-text-field prepend-icon="mdi-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="nombre">
                     </v-text-field>  
                     <h4>Apellidos</h4>
-                    <v-text-field class="loginInput mt-1 mb-3" v-model="apellido" hide-details>
+                    <v-text-field prepend-icon="mdi-ticket-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="apellido">
                     </v-text-field>   
                     <h4>Correo</h4>
-                    <v-text-field class="loginInput mt-1 mb-3" v-model="correo" hide-details>
+                    <v-text-field prepend-icon="mdi-email" class="selectItem mt-1 mb-3" variant="outlined" v-model="correo">
                     </v-text-field>  
                     <h4>Empresa</h4>
                     <v-select
-                    class="loginInput mt-1 mb-3"
+                    prepend-icon="mdi-office-building"
+                    class="selectItem mt-1 mb-3"
                     v-model="empresa"
                     :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
-                    hide-details
+                    variant="outlined"
                     ></v-select> 
                     <h4>Documentos</h4>   
-                    <v-file-input v-model="documento" label="Registre su Documento"></v-file-input>          
+                    <v-file-input class="selectItem mt-1 mb-3" variant="outlined" v-model="documento" label="Registre su Documento"></v-file-input>          
                 </v-col>
                 <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" align-self="center">
                     <v-img class="imgLogin" src="@/assets/imgprincipal.jpg"></v-img>
@@ -147,7 +141,7 @@ export default defineComponent({
     margin: 0 auto;
     box-shadow: 4px 7px 2px 4px rgba(0, 0, 0, 0.2);
 }
-.loginInput{
+.selectItem{
     border-radius: 20px !important;
 }
 
@@ -163,6 +157,7 @@ export default defineComponent({
 
 .btnEnviar:hover{
     transform: scale(1.10);
+    box-shadow: 7px 5px 30px -7px #029f8f;
 }
 
 .btnEnviar .v-btn__prepend{

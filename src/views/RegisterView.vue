@@ -6,70 +6,83 @@
         <v-row class="ma-0">
             <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <h4>Seleccione su Empresa</h4>
-                <v-select class="mt-2 mb-4" @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']" hide-details></v-select>
+                <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
             </v-col>
             <v-col  cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
                 <h4>Seleccione al trabajador</h4>
-                <v-select class="mt-2 mb-4" :disabled="empresaReg=== ''" :items="usuarios" item-title="text" item-value="value" v-model="usuario"></v-select>
+                <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" :disabled="empresaReg=== ''" :items="usuarios" item-title="text" item-value="value" v-model="usuario"></v-select>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
                 <v-text-field 
+                class="selectItem"
                 label="Curso 1" 
                 v-model="curso1" 
                 :disabled="usuario===''" 
                 type="number" 
                 hide-spin-buttons
                 :rules="rules" 
+                variant="outlined"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
                 <v-text-field 
+                class="selectItem"
                 label="Curso 2" 
                 v-model="curso2" 
                 :disabled="usuario===''" 
                 type="number" 
                 hide-spin-buttons
                 :rules="rules" 
+                variant="outlined"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
                 <v-text-field 
+                class="selectItem"
                 label="Curso 3" 
                 v-model="curso3" 
                 :disabled="usuario===''" 
                 type="number" 
                 hide-spin-buttons
-                :rules="rules" 
+                :rules="rules"    
+                variant="outlined"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
                 <v-text-field 
+                class="selectItem"
                 label="Curso 4" 
                 v-model="curso4" 
                 :disabled="usuario===''" 
                 type="number" 
                 hide-spin-buttons
                 :rules="rules" 
+                variant="outlined"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
                 <v-text-field 
+                class="selectItem"
                 label="Curso 5" 
                 v-model="curso5" 
                 :disabled="usuario===''" 
                 type="number" 
                 hide-spin-buttons
                 :rules="rules" 
+                variant="outlined"
                 ></v-text-field>
             </v-col>            
         </v-row>
         <v-row class="ma-0" justify="center">
-            <v-col cols="9">
-                <v-btn @click="guardarNota()" block
-                color="#029f8f"
-                :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined"
-                >guardar</v-btn>
-            </v-col>
+            <!-- :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined" -->
+            <v-btn 
+            class="btnGuardar"
+            prepend-icon="mdi-content-save"
+            @click="guardarNota()"
+            color="#029f8f"
+            >
+            guardar
+            </v-btn>
         </v-row>
 
         <v-snackbar
@@ -179,6 +192,50 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style>
+.selectItem .v-input__control{
+    background-color: white;
+}
+.btnGuardar{
+    width: 200px;
+    margin: 0 auto;
+    transition: .4s;
+}
 
+.btnGuardar:hover{
+   transform: scale(1.1);
+   transition: .4s;
+   box-shadow: 7px 5px 30px -7px #029f8f;
+}
+
+.btnGuardar:active{
+    transform: scale(.95);
+    transition: .4s;
+}
+
+.btnGuardar:hover .v-btn__prepend{
+    animation: spin 1s linear infinite
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-15deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(15deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
 </style>
