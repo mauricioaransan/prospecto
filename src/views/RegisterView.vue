@@ -3,87 +3,90 @@
         <v-row class="ma-0" justify="center">
             <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Registro de Notas </div>
         </v-row>
-        <v-row class="ma-0">
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
-                <h4>Seleccione su Empresa</h4>
-                <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
-            </v-col>
-            <v-col  cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
-                <h4>Seleccione al trabajador</h4>
-                <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" :disabled="empresaReg=== ''" :items="usuarios" item-title="text" item-value="value" v-model="usuario"></v-select>
-            </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
-                <v-text-field 
-                class="selectItem"
-                label="Curso 1" 
-                v-model="curso1" 
-                :disabled="usuario===''" 
-                type="number" 
-                hide-spin-buttons
-                :rules="rules" 
-                variant="outlined"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
-                <v-text-field 
-                class="selectItem"
-                label="Curso 2" 
-                v-model="curso2" 
-                :disabled="usuario===''" 
-                type="number" 
-                hide-spin-buttons
-                :rules="rules" 
-                variant="outlined"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
-                <v-text-field 
-                class="selectItem"
-                label="Curso 3" 
-                v-model="curso3" 
-                :disabled="usuario===''" 
-                type="number" 
-                hide-spin-buttons
-                :rules="rules"    
-                variant="outlined"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
-                <v-text-field 
-                class="selectItem"
-                label="Curso 4" 
-                v-model="curso4" 
-                :disabled="usuario===''" 
-                type="number" 
-                hide-spin-buttons
-                :rules="rules" 
-                variant="outlined"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
-                <v-text-field 
-                class="selectItem"
-                label="Curso 5" 
-                v-model="curso5" 
-                :disabled="usuario===''" 
-                type="number" 
-                hide-spin-buttons
-                :rules="rules" 
-                variant="outlined"
-                ></v-text-field>
-            </v-col>            
-        </v-row>
-        <v-row class="ma-0" justify="center">
-            <!-- :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined" -->
-            <v-btn 
-            class="btnGuardar"
-            prepend-icon="mdi-content-save"
-            @click="guardarNota()"
-            color="#029f8f"
-            >
-            guardar
-            </v-btn>
-        </v-row>
+        <v-form v-model="refFormulario">
+            <v-row class="ma-0">
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+                    <h4>Seleccione su Empresa</h4>
+                    <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" @update:menu="changeUsuarios()" v-model="empresaReg" :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"></v-select>
+                </v-col>
+                <v-col  cols="12" sm="12" md="6" lg="6" xl="6" xll="6">
+                    <h4>Seleccione al trabajador</h4>
+                    <v-select variant="outlined" hide-details class="selectItem mt-2 mb-4" :disabled="empresaReg=== ''" :items="usuarios" item-title="text" item-value="value" v-model="usuario"></v-select>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
+                    <v-text-field 
+                    class="selectItem"
+                    label="Curso 1" 
+                    v-model="curso1" 
+                    :disabled="usuario===''" 
+                    type="number" 
+                    hide-spin-buttons
+                    :rules="rules" 
+                    variant="outlined"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
+                    <v-text-field 
+                    class="selectItem"
+                    label="Curso 2" 
+                    v-model="curso2" 
+                    :disabled="usuario===''" 
+                    type="number" 
+                    hide-spin-buttons
+                    :rules="rules" 
+                    variant="outlined"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
+                    <v-text-field 
+                    class="selectItem"
+                    label="Curso 3" 
+                    v-model="curso3" 
+                    :disabled="usuario===''" 
+                    type="number" 
+                    hide-spin-buttons
+                    :rules="rules"    
+                    variant="outlined"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
+                    <v-text-field 
+                    class="selectItem"
+                    label="Curso 4" 
+                    v-model="curso4" 
+                    :disabled="usuario===''" 
+                    type="number" 
+                    hide-spin-buttons
+                    :rules="rules" 
+                    variant="outlined"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xll="6" class="my-3">
+                    <v-text-field 
+                    class="selectItem"
+                    label="Curso 5" 
+                    v-model="curso5" 
+                    :disabled="usuario===''" 
+                    type="number" 
+                    hide-spin-buttons
+                    :rules="rules" 
+                    variant="outlined"
+                    ></v-text-field>
+                </v-col>            
+            </v-row>
+            <v-row class="ma-0" justify="center">
+                <!-- :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined" -->
+                <v-btn 
+                class="btnGuardar"
+                prepend-icon="mdi-content-save"
+                @click="guardarNota()"
+                color="#029f8f"
+                :disabled="!refFormulario"
+                >
+                guardar
+                </v-btn>
+            </v-row>
+        </v-form>
 
         <v-snackbar
         v-model="snackbarAdd"
@@ -122,11 +125,16 @@ export default defineComponent({
         const curso3:Ref<number|undefined> = ref();
         const curso4:Ref<number|undefined> = ref();
         const curso5:Ref<number|undefined> = ref();
+        const refFormulario = ref(false);
 
         const rules = ref(
             [
             (value:any) => !!value || 'Este campo es requerido',
-            (value:any) => !!value && value <= 20 || 'No ingresar valores mayores a 20'
+            (value:any) => !!value && value <= 20 || 'No ingresar valores mayores a 20',
+            (value:any) => {
+                        const valid = /^[0-9.]+$/.test(value);
+                        return valid || 'Only numbers and dots are allowed';
+                    },
             ]
         )
 
@@ -186,6 +194,7 @@ export default defineComponent({
             returnpage,changeUsuarios,showTable,guardarNota,
             curso1, curso2, curso3, curso4, curso5,
             rules, smAndDown,
+            refFormulario,
             usuarios,empresaReg, usuario, snackbarAdd
         }
     }

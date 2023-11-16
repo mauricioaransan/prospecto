@@ -1,41 +1,44 @@
 <template>
     <div class=content-register>
         <v-card class="pa-4 mt-10 mb-4 logincard" :style="smAndDown?'width: 95%':'width:80%'">
-            <v-row class="ma-0" justify="center">
-                <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Ficha de usuario </div>
-            </v-row>
-            <v-row class="ma-0">
-                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="px-0">
-                    <h4>Nombres</h4>
-                    <v-text-field prepend-icon="mdi-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="nombre">
-                    </v-text-field>  
-                    <h4>Apellidos</h4>
-                    <v-text-field prepend-icon="mdi-ticket-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="apellido">
-                    </v-text-field>   
-                    <h4>Correo</h4>
-                    <v-text-field prepend-icon="mdi-email" class="selectItem mt-1 mb-3" variant="outlined" v-model="correo">
-                    </v-text-field>  
-                    <h4>Empresa</h4>
-                    <v-select
-                    prepend-icon="mdi-office-building"
-                    class="selectItem mt-1 mb-3"
-                    v-model="empresa"
-                    :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
-                    variant="outlined"
-                    ></v-select> 
-                    <h4>Documentos</h4>   
-                    <v-file-input class="selectItem mt-1 mb-3" variant="outlined" v-model="documento" label="Registre su Documento"></v-file-input>          
-                </v-col>
-                <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" align-self="center">
-                    <v-img class="imgLogin" src="@/assets/imgprincipal.jpg"></v-img>
-                </v-col>
-                
-                <v-col cols="12" class="mt-8">
-                    <v-btn class="btnEnviar" @click="guardar()" width="200" color="#029f8f"  prepend-icon="mdi-send"
-                    :disabled=" nombre==='' || apellido==='' || correo==='' || empresa===''"
-                    >Enviar</v-btn>                   
-                </v-col>
-            </v-row>            
+            <v-form fast-fail v-model="refFormulario">
+                <v-row class="ma-0" justify="center">
+                    <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Ficha de usuario </div>
+                </v-row>
+                <v-row class="ma-0">
+                    <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="px-0">
+                        <h4>Nombres</h4>
+                        <v-text-field :rules="[rules.required]" prepend-icon="mdi-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="nombre">
+                        </v-text-field>  
+                        <h4>Apellidos</h4>
+                        <v-text-field :rules="[rules.required]" prepend-icon="mdi-ticket-account" class="selectItem mt-1 mb-3" variant="outlined" v-model="apellido">
+                        </v-text-field>   
+                        <h4>Correo</h4>
+                        <v-text-field :rules="[rules.required,rules.email]" prepend-icon="mdi-email" class="selectItem mt-1 mb-3" variant="outlined" v-model="correo">
+                        </v-text-field>  
+                        <h4>Empresa</h4>
+                        <v-select
+                        :rules="[rules.required]"
+                        prepend-icon="mdi-office-building"
+                        class="selectItem mt-1 mb-3"
+                        v-model="empresa"
+                        :items="['Empresa1', 'Empresa2', 'Empresa3', 'Empresa4', 'Empresa5', 'Empresa6']"
+                        variant="outlined"
+                        ></v-select> 
+                        <h4>Documentos</h4>   
+                        <v-file-input class="selectItem mt-1 mb-3" variant="outlined" v-model="documento" label="Registre su Documento"></v-file-input>          
+                    </v-col>
+                    <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" align-self="center">
+                        <v-img class="imgLogin" src="@/assets/imgprincipal.jpg"></v-img>
+                    </v-col>
+                    
+                    <v-col cols="12" class="mt-8">
+                        <v-btn class="btnEnviar" @click="guardar()" width="200" color="#029f8f"  prepend-icon="mdi-send"
+                        :disabled="!refFormulario"
+                        >Enviar</v-btn>                   
+                    </v-col>
+                </v-row>    
+            </v-form>        
         </v-card>
 
         <v-snackbar
@@ -67,6 +70,7 @@ export default defineComponent({
         const empresa   = ref('');
         const documento = ref([]);
 
+        const refFormulario = ref(false);
         const snackbarAdd = ref(false);
 
         const {smAndDown} = useDisplay();
@@ -100,15 +104,19 @@ export default defineComponent({
             documento.value = []; 
         }
 
+        const rules         = ref({
+            required:(value:string) => !!value || 'Este campo es requerido.',
+            email : (value:string) => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Correo Invalido'
+          },
+        });
+
         return {
-            curso,    
-            nombre,   
-            apellido, 
-            correo,   
-            empresa,  
-            documento,
-            snackbarAdd,
-            smAndDown,
+            curso, nombre, apellido, correo, empresa, documento,
+            snackbarAdd, smAndDown,
+            rules,
+            refFormulario,
             returnpage, guardar,
         }
     }
