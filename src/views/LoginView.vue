@@ -23,9 +23,11 @@
                         class="selectItem mt-1 mb-3"
                         placeholder="admin/password" 
                         :rules="[rules.required]" 
-                        prepend-icon="mdi-lock" 
+                        prepend-icon="mdi-lock"
+                        :append-inner-icon="passIconEye" 
                         variant="outlined"
                         type="password" 
+                        @click:append-inner="changeTypeField()"
                         >
                         </v-text-field>            
                     </v-col>
@@ -76,9 +78,22 @@ export default defineComponent({
         const snackbarFound = ref(false);
         const snackbarNotFound = ref(false);
 
+        const passIconEye = ref('mdi-eye');
+        const passTypeField = ref('');
+
         const {smAndDown} = useDisplay();
 
         const store = useStore();
+
+        const changeTypeField = () =>{
+            if(passTypeField.value === 'password'){
+                passIconEye.value = 'mdi-eye';
+                passTypeField.value = 'text';
+            }else{
+                passIconEye.value = 'mdi-eye-close';
+                passTypeField.value = 'password';
+            }
+        }
         
         const enviar = () => {
 
@@ -106,10 +121,10 @@ export default defineComponent({
 
         return {
             curso, usuario, password, correo, empresa, documento,
-            rules, formLogin, 
+            rules, formLogin, passIconEye, 
             snackbarFound, snackbarNotFound,
             smAndDown,
-            enviar,
+            enviar,changeTypeField,
         }
     }
 })
