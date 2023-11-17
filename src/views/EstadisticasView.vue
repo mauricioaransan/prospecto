@@ -54,9 +54,6 @@
            </v-row>
         </div>
     </v-sheet>
-    <v-btn @click="returnpage()" color="blue">
-        volver
-    </v-btn>
 </template>
 
 <script lang="ts">
@@ -261,11 +258,9 @@ export default defineComponent({
 
 <style>
 .cardEstadisticas{
-    width: 60%;
-    /* height: 400px; */
     margin: 40px auto;
     border-radius: 20px;
-    border: 4px solid grey;    
+    border: 3px solid rgb(6, 127, 117); 
     background-color: #effefb !important;
 }
 

@@ -158,6 +158,9 @@ export default createStore({
         empresa   : 'Empresa6',
       },
   ],
+    viewPage:'userdata',
+    showDrawer:false,
+    typeUser:''
   },
   getters: {
   },
@@ -165,6 +168,23 @@ export default createStore({
     listarUsuarios(state,totalUsuarios){
       state.usuarios.push(totalUsuarios);
     },
+
+    changeViewPage(state,value){
+      state.viewPage = value;
+    },
+
+    showDrawer(state){
+      state.showDrawer = true;
+    },
+    
+    changeTypeUser(state,value){
+      state.typeUser = value;
+    },
+
+    hiddenDrawer(state){
+      state.showDrawer = false;
+    },
+
     addCursos(state,finalCurso){
       const indexado = state.usuarios.findIndex(({nombre,empresa}:any)=>{
         if(nombre === finalCurso.nombre && empresa === finalCurso.empresa){

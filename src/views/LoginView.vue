@@ -1,7 +1,7 @@
 <template>
     <div class="loginPage">
         <v-card class="pa-4 mb-4 LoginCard" width="650" color="#effefb">
-            <v-form fast-fail v-model="formLogin">
+            <v-form fast-fail v-model="formLogin" @submit.prevent="enviar">
                 <v-row class="ma-0" justify="center">
                     <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Login </div>
                 </v-row>
@@ -11,7 +11,7 @@
                         <v-text-field 
                         v-model="usuario"
                         class="selectItem mt-1 mb-3" 
-                        placeholder="superusuario"
+                        placeholder="admin/usuario"
                         :rules="[rules.required]" 
                         variant="outlined" 
                         prepend-icon="mdi-account" 
@@ -21,7 +21,7 @@
                         <v-text-field 
                         v-model="password"
                         class="selectItem mt-1 mb-3"
-                        placeholder="password" 
+                        placeholder="admin/password" 
                         :rules="[rules.required]" 
                         prepend-icon="mdi-lock" 
                         variant="outlined"
@@ -31,7 +31,7 @@
                     </v-col>
                     
                     <v-col cols="12" class="mt-8">
-                        <v-btn class="btnEnviar" @click="enviar()" width="200" color="#029f8f"  prepend-icon="mdi-send"
+                        <v-btn type="submit" class="btnEnviar" @click="enviar()" width="200" color="#029f8f"  prepend-icon="mdi-send"
                         :disabled="!formLogin"
                         >Ingresar</v-btn>                   
                     </v-col>
@@ -80,15 +80,21 @@ export default defineComponent({
 
         const store = useStore();
         
-        const returnpage = () => {
-            router.push('/home')
-        }
         const enviar = () => {
 
-            if(usuario.value === 'superusuario' && password.value === 'password'){
+            if(usuario.value === 'usuario' && password.value === 'password'){
                 snackbarFound.value = true;
-                router.push('/home')
-            }else{
+                router.push('/home');
+                store.commit('changeViewPage', 'userdata');
+                store.commit('changeTypeUser', 'user');
+
+            }else if(usuario.value === 'admin' && password.value === 'admin'){
+                snackbarFound.value = true;
+                router.push('/home');
+                store.commit('changeViewPage', 'register');
+                store.commit('changeTypeUser', 'admin');
+            }
+            else{
                 snackbarNotFound.value = true;
             }
 
@@ -100,11 +106,10 @@ export default defineComponent({
 
         return {
             curso, usuario, password, correo, empresa, documento,
+            rules, formLogin, 
             snackbarFound, snackbarNotFound,
             smAndDown,
-            rules,
-            formLogin,
-            returnpage, enviar,
+            enviar,
         }
     }
 })

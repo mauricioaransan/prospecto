@@ -1,5 +1,5 @@
 <template>
-    <v-card class="pa-4 my-4 logincard" color="#effefb" :style="smAndDown?'width: 95%':'width:80%'">
+    <v-card class="pa-4 mb-4 registerCard" color="#effefb" sytle="margin: 0 auto" :style="smAndDown?'width: 95%':'width:80%'">
         <v-row class="ma-0" justify="center">
             <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Registro de Notas </div>
         </v-row>
@@ -96,12 +96,6 @@
         Notas Agregadas exitosamente
         </v-snackbar>
     </v-card>
-    <v-btn @click="returnpage()" color="blue">
-        volver
-    </v-btn>
-    <v-btn @click="showTable()" color="blue">
-        mostrar tabla
-    </v-btn>
 </template>
 
 <script lang="ts">
@@ -202,6 +196,13 @@ export default defineComponent({
 </script>
 
 <style>
+.registerCard{
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 30px;
+    box-shadow: 3px 3px 10px rgba(0,0,0,.4);
+    border: 3px solid rgb(6, 127, 117);
+}
 .selectItem .v-input__control{
     border-radius: 20px;
     background-color: white;

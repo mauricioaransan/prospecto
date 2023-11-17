@@ -1,21 +1,22 @@
 <template>
   <v-app>
-    
-    <NavigationDrawer/>
+    <v-layout>
+      <NavigationDrawerVue/>
       <v-main>
           <router-view/>        
       </v-main>
+    </v-layout>      
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import NavigationDrawer from './components/NavigationDrawer.vue';
+import NavigationDrawerVue from '@/components/NavigationDrawer.vue';
 
 export default defineComponent({
   name: 'App',
 components:{
-  NavigationDrawer
+  NavigationDrawerVue
 },
   data () {
     return {

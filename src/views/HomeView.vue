@@ -6,12 +6,13 @@
 
 <script lang="ts">
 import router from '@/router';
-import { defineComponent } from 'vue';
+import { defineComponent, computed, onMounted, watch } from 'vue';
 import { useDisplay } from 'vuetify';
 
-import EstadisticasView from './EstadisticasView.vue';
-import RegisterView from './RegisterView.vue';
-import UserDataView from './UserDataView.vue';
+import EstadisticasView from '@/views/EstadisticasView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import UserDataView from '@/views/UserDataView.vue';
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'HomeView',
@@ -22,30 +23,42 @@ export default defineComponent({
     UserDataView,
   },
 
-  props:{
-    drawerView:{
-      required: true,
-      type:String
-    }
-  },
 
   setup(){
 
     const { smAndDown } = useDisplay();
 
-    const showLogin = () => {
-      router.push('/login')
-    }
-    const showRegister = () => {
-      router.push('/register')
-    }
-    const showEstadisticas = () => {
-      router.push('/estadisticas')
-    }
+    const store = useStore();
+
+    const drawerView = computed(()=> store.state.viewPage);
+
+
+    watch(drawerView,(p:string,a:string)=>{
+      p===a ? console.log('hi') : null;
+      if(p === 'salir') {
+        router.push('/')
+        store.commit('hiddenDrawer')
+      }
+    })
+
+    // const showLogin = () => {
+    //   router.push('/login')
+    // }
+    // const showRegister = () => {
+    //   router.push('/register')
+    // }
+    // const showEstadisticas = () => {
+    //   router.push('/estadisticas')
+    // }
+
+    onMounted(() => {
+      store.commit('showDrawer')
+    })
+
 
     return{
-      showLogin,showRegister,showEstadisticas,
-      smAndDown,
+      // showLogin,showRegister,showEstadisticas,
+      smAndDown,drawerView,
     }
   }
 });

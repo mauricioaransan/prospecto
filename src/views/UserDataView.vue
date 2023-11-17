@@ -125,7 +125,7 @@ export default defineComponent({
     margin: 0 auto;
     /* width: 80%; */
     border-radius: 20px;
-    border: 3px solid rgb(6, 127, 117);
+    border: 4px solid rgb(6, 127, 117);
     background-color: #effefb !important;
 }
 
