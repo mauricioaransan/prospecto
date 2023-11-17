@@ -1,29 +1,32 @@
 <template>
-  <v-sheet class="homeCard pa-6" color="transparent" elevation="1" :style="smAndDown?'width: 95%; height:320px':'width:80%; height:200px'">
-    <v-row class="ma-0 mt-9" justify="center" >
-        <v-btn :block="smAndDown" @click="showLogin()" :class="smAndDown ? 'ma-4' : 'mr-8'"  color="green">
-          Login
-        </v-btn>
-        <v-btn :block="smAndDown" @click="showRegister()" :class="smAndDown ? 'ma-4' : 'mx-8'"  color="green">
-          Register
-        </v-btn>
-        <v-btn :block="smAndDown" @click="showEstadisticas()" :class="smAndDown ? 'ma-4' : 'ml-8'" color="green">
-          Estadisticas
-        </v-btn>
-    
-    </v-row>
-  </v-sheet>
+  <EstadisticasView v-if="drawerView === 'estadisticas'"/>
+  <RegisterView     v-if="drawerView === 'register'"/>
+  <UserDataView     v-if="drawerView === 'userdata'"/>
 </template>
 
 <script lang="ts">
 import router from '@/router';
 import { defineComponent } from 'vue';
-import { useDisplay } from 'vuetify'
+import { useDisplay } from 'vuetify';
+
+import EstadisticasView from './EstadisticasView.vue';
+import RegisterView from './RegisterView.vue';
+import UserDataView from './UserDataView.vue';
 
 export default defineComponent({
   name: 'HomeView',
 
   components: {
+    EstadisticasView,
+    RegisterView,
+    UserDataView,
+  },
+
+  props:{
+    drawerView:{
+      required: true,
+      type:String
+    }
   },
 
   setup(){

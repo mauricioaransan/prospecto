@@ -81,13 +81,13 @@ export default defineComponent({
         const store = useStore();
         
         const returnpage = () => {
-            router.push('/')
+            router.push('/home')
         }
         const enviar = () => {
 
             if(usuario.value === 'superusuario' && password.value === 'password'){
                 snackbarFound.value = true;
-                router.push('/userdata')
+                router.push('/home')
             }else{
                 snackbarNotFound.value = true;
             }

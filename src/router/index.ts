@@ -14,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginView
   },
   {
+    path: '/home',
+    name: 'Home',
+    component: HomeView
+  },
+  {
     path: '/userdata',
     name: 'UserData',
     component: UserDataViewVue
