@@ -26,7 +26,7 @@
                         prepend-icon="mdi-lock"
                         :append-inner-icon="passIconEye" 
                         variant="outlined"
-                        type="password" 
+                        :type="passTypeField" 
                         @click:append-inner="changeTypeField()"
                         >
                         </v-text-field>            
@@ -79,7 +79,7 @@ export default defineComponent({
         const snackbarNotFound = ref(false);
 
         const passIconEye = ref('mdi-eye');
-        const passTypeField = ref('');
+        const passTypeField = ref('password');
 
         const {smAndDown} = useDisplay();
 
@@ -87,10 +87,10 @@ export default defineComponent({
 
         const changeTypeField = () =>{
             if(passTypeField.value === 'password'){
-                passIconEye.value = 'mdi-eye';
+                passIconEye.value = 'mdi-eye-off';
                 passTypeField.value = 'text';
             }else{
-                passIconEye.value = 'mdi-eye-close';
+                passIconEye.value = 'mdi-eye';
                 passTypeField.value = 'password';
             }
         }
@@ -121,7 +121,7 @@ export default defineComponent({
 
         return {
             curso, usuario, password, correo, empresa, documento,
-            rules, formLogin, passIconEye, 
+            rules, formLogin, passIconEye, passTypeField,
             snackbarFound, snackbarNotFound,
             smAndDown,
             enviar,changeTypeField,
@@ -132,9 +132,10 @@ export default defineComponent({
 
 <style>
 .loginPage{
-    height: 100vh;
+    height: 100%;
     background: linear-gradient(90deg, #003330 0%, #077e73 50%,#003330 100%);
     padding-top: 80px;
+    overflow-y: visible;
 }
 
 .loginPage .btnEnviar:hover .v-btn__prepend{
@@ -145,5 +146,9 @@ export default defineComponent({
     margin: 0 auto;
     border-radius: 30px;
     box-shadow: 3px 3px 10px rgba(0,0,0,.4);
+}
+
+:root{
+    overflow-y: visible ;
 }
 </style>

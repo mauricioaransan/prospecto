@@ -5,7 +5,7 @@
     expand-on-hover
     rail
     :permanent="!smAndDown"
-    
+    class="navDrawerFixed"
     >
       <v-list>
         <v-list-item
@@ -25,16 +25,16 @@
       <v-divider></v-divider>
 
       <v-list density="compact" nav>
-        <v-list-item v-if="typeUser==='user'" @click="cambiarView('userdata')" prepend-icon="mdi-account-search" title="Info. Usuario" value="myfiles"></v-list-item>
-        <v-list-item v-if="typeUser==='admin'" @click="cambiarView('register')" prepend-icon="mdi-file-document-multiple" title="Notas" value="starred"></v-list-item>
-        <v-list-item v-if="typeUser==='admin'" @click="cambiarView('estadisticas')" prepend-icon="mdi-file-chart" title="Estadisticas" value="shared"></v-list-item>
+        <v-list-item v-if="typeUser==='user'" @click="cambiarView('userdata')" prepend-icon="mdi-account-search" title="Info. Usuario" value="userdata"></v-list-item>
+        <v-list-item v-if="typeUser==='admin'" @click="cambiarView('register')" prepend-icon="mdi-file-document-multiple" title="Notas" value="register"></v-list-item>
+        <v-list-item v-if="typeUser==='admin'" @click="cambiarView('estadisticas')" prepend-icon="mdi-file-chart" title="Estadisticas" value="estadisticas"></v-list-item>
         <v-list-item  @click="cambiarView('salir')" prepend-icon="mdi-home-import-outline" title="Salir" value="loguot"></v-list-item>
       </v-list>
     </v-navigation-drawer>
 
   </template>
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useDisplay } from 'vuetify';
 
@@ -72,3 +72,14 @@ export default defineComponent({
     }
 })
 </script>
+
+<style>
+  .navDrawerFixed{
+    position: fixed !important;
+    height: 100vh !important;
+  }
+  .navDrawerFixed:hover{
+    position: fixed !important;
+    height: 100vh !important;
+  }
+</style>

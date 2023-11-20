@@ -2,6 +2,7 @@
     <v-card class="pa-4 mb-4 registerCard" color="#effefb" sytle="margin: 0 auto" :style="smAndDown?'width: 95%':'width:80%'">
         <v-row class="ma-0" justify="center">
             <div :class="smAndDown?'CardTitleXS':'CardTitle'"> Registro de Notas </div>
+            {{ refFormulario }}
         </v-row>
         <v-form v-model="refFormulario">
             <v-row class="ma-0">
@@ -75,7 +76,6 @@
                 </v-col>            
             </v-row>
             <v-row class="ma-0" justify="center">
-                <!-- :disabled="curso1 === undefined || curso2 === undefined || curso3 === undefined || curso4 === undefined || curso5 === undefined" -->
                 <v-btn 
                 class="btnGuardar"
                 prepend-icon="mdi-content-save"
@@ -119,7 +119,7 @@ export default defineComponent({
         const curso3:Ref<number|undefined> = ref();
         const curso4:Ref<number|undefined> = ref();
         const curso5:Ref<number|undefined> = ref();
-        const refFormulario = ref(false);
+        const refFormulario:Ref<boolean|null> = ref(false);
 
         const rules = ref(
             [
@@ -180,6 +180,7 @@ export default defineComponent({
             curso4.value  = undefined;
             curso5.value  = undefined;
             usuario.value = '';
+            refFormulario.value = null;
 
             snackbarAdd.value = true;
         }
